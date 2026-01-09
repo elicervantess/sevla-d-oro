@@ -13,6 +13,7 @@ requests = "^2.32.3"
 python-multipart = "^0.0.9"
 twilio = "^9.2.3"
 openai = "^1.35.14"
+python-dotenv = "^1.2.1"
 
 [tool.poetry.group.dev.dependencies]
 poethepoet = "^0.24.4"

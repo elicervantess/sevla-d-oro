@@ -1,0 +1,6 @@
+{
+    "python.defaultInterpreterPath": "/Users/jirehcervantes/Library/Caches/pypoetry/virtualenvs/hermes-retail-backend-oYWZM8Ju-py3.12/bin/python",
+    "python.analysis.extraPaths": [
+        "/Users/jirehcervantes/Library/Caches/pypoetry/virtualenvs/hermes-retail-backend-oYWZM8Ju-py3.12/lib/python3.12/site-packages"
+    ]
+}

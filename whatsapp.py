@@ -57,8 +57,9 @@ def send_template_message(
 # get the media url with secure http
 def get_media_url(secure_media_url: str) -> str:
     """Get the media url with secure http."""
-    auth_str = "f{TWILIO_ACCOUNT_SID}:{TWILIO_AUTH_TOKEN}"
+    auth_str = f"{TWILIO_ACCOUNT_SID}:{TWILIO_AUTH_TOKEN}"
     auth_bytes = auth_str.encode("utf-8")
     auth_b64 = b64encode(auth_bytes).decode("utf-8")
     headers = {"Authorization": "Basic " + auth_b64}
-    return requests.get(secure_media_url, headers=headers, timeout=10).url
+    response = requests.get(secure_media_url, headers=headers, timeout=10)  # type: ignore[misc]
+    return response.url  # type: ignore[return-value]

@@ -1,7 +1,14 @@
 """Yquando backend env keys & settings module."""
 
 import os
+from pathlib import Path
 from typing import Optional
+
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+env_path = Path(__file__).parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
 
 def get_required_env[T](env_name: str, default_value: Optional[str] = None) -> str:
