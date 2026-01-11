@@ -17,8 +17,16 @@ logger = logging.getLogger(__name__)
 
 def send_message(to_number: str, body_text: str) -> None:
     """Send a message to a phone number using Twilio API."""
-    if not to_number.startswith("whatsapp:"):
-        to_number = f"whatsapp:{to_number}"
+    # Remove whatsapp: prefix if present to normalize
+    if to_number.startswith("whatsapp:"):
+        to_number = to_number.replace("whatsapp:", "").strip()
+    
+    # Ensure number starts with +
+    if not to_number.startswith("+"):
+        to_number = f"+{to_number}"
+    
+    # Add whatsapp: prefix
+    to_number = f"whatsapp:{to_number}"
 
     try:
         message = client.messages.create(

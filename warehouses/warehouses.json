@@ -1,0 +1,110 @@
+[
+  {
+    "warehouse_id": "WH001",
+    "name": "Bodega San Juan de Lurigancho",
+    "address": "Av. Próceres de la Independencia 1245",
+    "district": "San Juan de Lurigancho",
+    "latitude": -11.9932,
+    "longitude": -76.9942,
+    "capacity_kg": 5000,
+    "current_load_kg": 1200,
+    "opening_hour": "06:00",
+    "closing_hour": "20:00",
+    "phone": "+51987654321",
+    "active": true,
+    "materials_accepted": [
+      "PET",
+      "HDPE",
+      "LDPE",
+      "PP",
+      "Cartón",
+      "Papel",
+      "Vidrio"
+    ]
+  },
+  {
+    "warehouse_id": "WH002",
+    "name": "Bodega Villa El Salvador",
+    "address": "Av. El Sol 892",
+    "district": "Villa El Salvador",
+    "latitude": -12.2122,
+    "longitude": -76.9392,
+    "capacity_kg": 3000,
+    "current_load_kg": 800,
+    "opening_hour": "07:00",
+    "closing_hour": "19:00",
+    "phone": "+51987654322",
+    "active": true,
+    "materials_accepted": [
+      "PET",
+      "Aluminio",
+      "Acero",
+      "Cobre",
+      "Cartón"
+    ]
+  },
+  {
+    "warehouse_id": "WH003",
+    "name": "Bodega Ate Vitarte",
+    "address": "Av. Nicolás Ayllón 3456",
+    "district": "Ate",
+    "latitude": -12.0464,
+    "longitude": -76.9378,
+    "capacity_kg": 4000,
+    "current_load_kg": 2100,
+    "opening_hour": "06:00",
+    "closing_hour": "20:00",
+    "phone": "+51987654323",
+    "active": true,
+    "materials_accepted": [
+      "PET",
+      "HDPE",
+      "PP",
+      "Cartón",
+      "Papel",
+      "Vidrio",
+      "Aluminio"
+    ]
+  },
+  {
+    "warehouse_id": "WH004",
+    "name": "Bodega Comas",
+    "address": "Av. Túpac Amaru Km 10.5",
+    "district": "Comas",
+    "latitude": -11.9389,
+    "longitude": -77.0528,
+    "capacity_kg": 3500,
+    "current_load_kg": 900,
+    "opening_hour": "06:30",
+    "closing_hour": "19:30",
+    "phone": "+51987654324",
+    "active": true,
+    "materials_accepted": [
+      "PET",
+      "HDPE",
+      "LDPE",
+      "Cartón",
+      "Papel"
+    ]
+  },
+  {
+    "warehouse_id": "WH005",
+    "name": "Bodega Villa María del Triunfo",
+    "address": "Av. Pachacútec 2890",
+    "district": "Villa María del Triunfo",
+    "latitude": -12.1592,
+    "longitude": -76.9414,
+    "capacity_kg": 2500,
+    "current_load_kg": 600,
+    "opening_hour": "07:00",
+    "closing_hour": "18:00",
+    "phone": "+51987654325",
+    "active": true,
+    "materials_accepted": [
+      "PET",
+      "HDPE",
+      "Cartón",
+      "Vidrio"
+    ]
+  }
+]

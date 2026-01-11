@@ -1,0 +1,25 @@
+{
+  "total_conversations": 0,
+  "total_messages": 12,
+  "providers_count": 0,
+  "buyers_count": 0,
+  "unknown_count": 0,
+  "materials_consulted": {},
+  "intents_detected": {
+    "comprar": 2,
+    "calidad": 1,
+    "vender": 2
+  },
+  "hot_leads": [],
+  "conversion_funnel": {
+    "inquiry": 0,
+    "negotiation": 0,
+    "closed": 0
+  },
+  "response_times": [
+    6.690554857254028,
+    1.5271968841552734,
+    9.940691947937012
+  ],
+  "last_updated": "2026-01-10T21:15:03.702047"
+}

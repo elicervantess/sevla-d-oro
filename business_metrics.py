@@ -47,6 +47,7 @@ class BusinessMetrics:
                 'closed': 0
             },
             'response_times': [],
+            'transaction_times': [],
             'last_updated': datetime.now().isoformat()
         }
     
@@ -173,6 +174,20 @@ class BusinessMetrics:
         
         self._save_metrics()
     
+    def track_transaction_time(self, duration_minutes: float):
+        """Track transaction completion time."""
+        if 'transaction_times' not in self.metrics:
+            self.metrics['transaction_times'] = []
+        
+        transaction_times: List[float] = self.metrics['transaction_times']  # type: ignore
+        transaction_times.append(duration_minutes)
+        
+        # Keep only last 500 transaction times
+        if len(transaction_times) > 500:
+            self.metrics['transaction_times'] = transaction_times[-500:]
+        
+        self._save_metrics()
+    
     def get_top_materials(self, limit: int = 10) -> List[Dict[str, Any]]:
         """Get most consulted materials."""
         materials = self.metrics['materials_consulted']
@@ -272,6 +287,56 @@ class BusinessMetrics:
             return True
         
         return False
+    
+    def get_dashboard_stats(self) -> Dict[str, Any]:
+        """Get dashboard statistics."""
+        return {
+            'total_conversations': self.metrics.get('total_conversations', 0),
+            'total_messages': self.metrics.get('total_messages', 0),
+            'providers': self.metrics.get('providers_count', 0),
+            'buyers': self.metrics.get('buyers_count', 0),
+            'hot_leads': len(self.metrics.get('hot_leads', [])),
+            'conversion_funnel': self.metrics.get('conversion_funnel', {}),
+            'materials_consulted': self.metrics.get('materials_consulted', {}),
+            'intents_detected': self.metrics.get('intents_detected', {})
+        }
+    
+    def get_kpis(self) -> Dict[str, Any]:
+        """Get key performance indicators."""
+        response_times = self.metrics.get('response_times', [])
+        transaction_times = self.metrics.get('transaction_times', [])
+        
+        avg_response = sum(response_times) / len(response_times) if response_times else 0
+        avg_transaction = sum(transaction_times) / len(transaction_times) if transaction_times else 0
+        
+        return {
+            'avg_response_time_seconds': round(avg_response, 2),
+            'avg_transaction_time_minutes': round(avg_transaction, 2),
+            'conversion_rate': self._calculate_conversion_rate(),
+            'hot_lead_rate': self._calculate_hot_lead_rate(),
+            'total_revenue': 0  # To be calculated from revenue_system
+        }
+    
+    def _calculate_conversion_rate(self) -> float:
+        """Calculate conversion rate from inquiry to closed."""
+        funnel = self.metrics.get('conversion_funnel', {})
+        inquiries = funnel.get('inquiry', 0)
+        closed = funnel.get('closed', 0)
+        
+        if inquiries == 0:
+            return 0.0
+        
+        return round((closed / inquiries) * 100, 2)
+    
+    def _calculate_hot_lead_rate(self) -> float:
+        """Calculate hot lead rate."""
+        total_convos = self.metrics.get('total_conversations', 0)
+        hot_leads = len(self.metrics.get('hot_leads', []))
+        
+        if total_convos == 0:
+            return 0.0
+        
+        return round((hot_leads / total_convos) * 100, 2)
 
 
 # Global metrics instance

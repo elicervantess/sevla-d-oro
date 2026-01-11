@@ -324,11 +324,20 @@ def identify_image(user_message: str, product_image_url: str, phone: str = "unkn
         # Convert to base64
         image_data = base64.b64encode(response.content).decode("utf-8")
         content_type = response.headers.get("content-type", "image/jpeg")
+        
+        # Validate image type
+        if not any(img_type in content_type for img_type in ['image/jpeg', 'image/png', 'image/webp']):
+            logger.warning(f"Invalid image type: {content_type}")
+            return "⚠️ Formato de imagen no válido. Por favor envía JPG, PNG o WEBP."
+        
         image_url_data = f"data:{content_type};base64,{image_data}"
         
+    except httpx.HTTPStatusError as e:
+        logger.error(f"HTTP error downloading image for {phone}: {e.response.status_code}")
+        return "⚠️ No pude descargar la imagen. Por favor, intenta enviarla de nuevo."
     except Exception as e:
         logger.error(f"Image download failed for {phone}: {str(e)}")
-        return "⚠️ No pude descargar la imagen. ¿Puedes intentar enviarla de nuevo?"
+        return "⚠️ Error al descargar la imagen. ¿Puedes intentar enviarla de nuevo?"
     
     # Get user profile for context
     user_profile = memory.get_user_profile(phone)
@@ -340,7 +349,7 @@ USUARIO: {user_profile.get('type', 'unknown').upper()}
 
 TU TAREA:
 Analiza la imagen y proporciona:
-1. Tipo exacto de material (PET, HDPE, aluminio, etc.)
+1. Tipo exacto de material (PET, HDPE, aluminio, cartón, etc.)
 2. Calidad visual (excelente/buena/regular/mala)
 3. Cantidad estimada (si es visible)
 4. Precio justo según nuestro catálogo
@@ -350,32 +359,28 @@ Analiza la imagen y proporciona:
 
 FORMATO DE RESPUESTA:
 
-📸 **Análisis de Imagen Completado**
+📸 **Análisis de Imagen**
 
-🔍 **Material Identificado:**
-[Nombre exacto del material - Ej: PET (Polietileno Tereftalato)]
+🔍 **Material:** [Nombre - Ej: PET o Aluminio]
 
-✨ **Calidad Visual:**
-[Excelente/Buena/Regular/Mala con breve explicación]
+✨ **Calidad:** [Excelente/Buena/Regular/Mala + breve razón]
 
-⚖️ **Cantidad Estimada:**
-[Si es visible, sino: "No visible en imagen"]
+⚖️ **Cantidad:** [Si visible: "~X kg", sino: "No visible"]
 
-💰 **Precio Justo de Mercado:**
-[Precio según catálogo + explicación]
+💰 **Precio:** S/ [X.XX]/kg
 
 📋 **Recomendaciones:**
-• [Consejo 1]
-• [Consejo 2]
-• [Consejo 3]
+• [Consejo específico 1]
+• [Consejo específico 2]
 
 {get_next_steps_for_user_type(user_profile.get('type', 'unknown'))}
 
 IMPORTANTE:
-- Si NO es material reciclable: indica claramente
+- Si NO es reciclable: indica claramente
 - Si calidad es mala: sé honesto pero constructivo
-- Siempre incluye precio justo (sin especulación)
-- Termina con pregunta o acción clara"""
+- Siempre da el precio justo (revisa catálogo arriba)
+- Termina con pregunta o acción clara
+- Sé breve y preciso (máximo 200 palabras)"""
     
     # Call OpenAI Vision
     try:
@@ -385,7 +390,7 @@ IMPORTANTE:
                 "role": "user",
                 "content": [
                     {"type": "text", "text": user_message or "Analiza este material reciclable"},
-                    {"type": "image_url", "image_url": {"url": image_url_data}}
+                    {"type": "image_url", "image_url": {"url": image_url_data, "detail": "auto"}}
                 ]
             }
         ]
@@ -393,26 +398,30 @@ IMPORTANTE:
         completion = openai_client.chat.completions.create(
             model="gpt-4o-mini",
             messages=messages,  # type: ignore
-            max_tokens=600,
+            max_tokens=500,
+            temperature=0.7
         )
         
         result = completion.choices[0].message.content
         
+        if not result:
+            return "⚠️ No pude analizar la imagen. Por favor, intenta con otra foto."
+        
         # Log analytics
         duration = time.time() - start_time
         logger.info(
-            f"Image analysis completed for {phone} "
+            f"✅ Image analysis completed for {phone} "
             f"(type: {user_profile['type']}, duration: {duration:.2f}s)"
         )
         
         # Save to memory
-        memory.add_message(phone, "user", "[Imagen enviada]")
-        memory.add_message(phone, "assistant", result or "")
+        memory.add_message(phone, "user", f"[Imagen enviada: {user_message}]")
+        memory.add_message(phone, "assistant", result)
         
         return result
         
     except Exception as e:
-        logger.error(f"Image analysis failed for {phone}: {str(e)}")
+        logger.error(f"❌ Image analysis failed for {phone}: {str(e)}")
         return "⚠️ Error al analizar la imagen. ¿Puedes intentar con otra foto más clara?"
 
 

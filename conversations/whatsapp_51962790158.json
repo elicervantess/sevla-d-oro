@@ -1,0 +1,56 @@
+{
+  "phone": "whatsapp:+51962790158",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Hola",
+      "timestamp": "2026-01-10T19:18:16.716345"
+    },
+    {
+      "role": "assistant",
+      "content": "¡Hola! 👋 Soy tu asistente de economía circular.\n\nConectamos **proveedores de materiales reciclables** con **compradores industriales**, eliminando intermediarios y promoviendo la sostenibilidad.\n\n¿Eres proveedor o comprador?\n• Escribe PROVEEDOR si vendes materiales\n• Escribe COMPRADOR si compras materiales\n• Escribe MENÚ para ver opciones",
+      "timestamp": "2026-01-10T19:18:16.716354"
+    },
+    {
+      "role": "user",
+      "content": "Hola un gusto",
+      "timestamp": "2026-01-10T19:18:32.203910"
+    },
+    {
+      "role": "assistant",
+      "content": "¡Hola! 👋 Soy tu asistente de economía circular.\n\nConectamos **proveedores de materiales reciclables** con **compradores industriales**, eliminando intermediarios y promoviendo la sostenibilidad.\n\n¿Eres proveedor o comprador?\n• Escribe PROVEEDOR si vendes materiales\n• Escribe COMPRADOR si compras materiales\n• Escribe MENÚ para ver opciones",
+      "timestamp": "2026-01-10T19:18:32.203916"
+    },
+    {
+      "role": "user",
+      "content": "compradorr",
+      "timestamp": "2026-01-10T19:18:44.247169"
+    },
+    {
+      "role": "assistant",
+      "content": "🏭 ¡Genial! Eres **COMPRADOR**\n\nConectamos tu empresa con +120 proveedores verificados.\n\n**Stock disponible:**\n📦 Plásticos: >66 toneladas\n🔩 Metales: >80 toneladas  \n📄 Papel/Cartón: >96 toneladas\n🪟 Vidrio: >30 toneladas\n\n**Beneficios:**\n✓ Precios directos (sin intermediarios)\n✓ Trazabilidad completa\n✓ Calidad verificada\n✓ Transacciones seguras\n\n¿Qué material necesitas?",
+      "timestamp": "2026-01-10T19:18:44.247831"
+    },
+    {
+      "role": "user",
+      "content": "a que te refieres con calidad verificada?",
+      "timestamp": "2026-01-10T19:19:13.608326"
+    },
+    {
+      "role": "assistant",
+      "content": "La **calidad verificada** se refiere a que todos los materiales reciclables que ofrecemos en nuestra plataforma son inspeccionados y cumplen con estándares específicos antes de ser listados. Esto asegura que:\n\n1. **Cumplimiento de Normativas**: Los materiales cumplen con las regulaciones locales e industriales para su reutilización.\n2. **Confiabilidad**: Puedes confiar en que recibirás exactamente lo que has solicitado, en condiciones óptimas para su uso.\n3. **Impacto Ambiental**: Al adquirir materiales reciclables de calidad, contribuyes a un proceso de economía circular efectivo, reduciendo la necesidad de productos vírgenes.\n\n¿Hay algún tipo específico de material reciclable que estés considerando comprar? 😊",
+      "timestamp": "2026-01-10T19:19:13.608335"
+    },
+    {
+      "role": "user",
+      "content": "quiero novia",
+      "timestamp": "2026-01-10T19:19:32.976614"
+    },
+    {
+      "role": "assistant",
+      "content": "Lo siento, soy especialista en materiales reciclables y economía circular. ¿Te puedo ayudar con eso? 🌍♻️",
+      "timestamp": "2026-01-10T19:19:32.976624"
+    }
+  ],
+  "last_updated": "2026-01-10T19:19:32.976636"
+}
