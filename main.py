@@ -50,7 +50,7 @@ def reply(
 
     if not image_url and user_message:
         logger.info("Replying to text message only.")
-        chat_response = get_response(user_message)
+        chat_response = get_response(user_message, phone=From)
 
         if chat_response is None:
             logger.error("Failed to get a response from the chat system")
@@ -62,7 +62,7 @@ def reply(
         if not user_message:
             logger.info("Replying to image only.")
             user_message = "analyze the image by its url and describe it"
-        chat_response = identify_image(user_message, image_url)
+        chat_response = identify_image(user_message, image_url, phone=From)
 
         if chat_response is None:
             logger.error("Failed to get a response from the chat system")

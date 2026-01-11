@@ -1,7 +1,7 @@
 """Sample test module."""
 
 from env import TWILIO_MESSAGING_SERVICE_SID
-from wsp import send_message, send_template_message
+from whatsapp import send_message, send_template_message
 
 TEST_NUMBER = "+51984724707"
 

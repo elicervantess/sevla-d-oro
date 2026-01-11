@@ -1,91 +1,181 @@
-"""Product catalog data for Selva D' Oro."""
+"""Recyclable materials catalog for circular economy platform."""
 
-from typing import TypedDict
+from typing import Dict, List, TypedDict
 
 
 class MaterialData(TypedDict):
-    """Product data structure."""
+    """Recyclable material data structure."""
 
     item_id: int
     material: str
     price_kg: float
     price_ton: str
+    category: str
+    stock_available: str
 
 
-def transform_material_data(material_data: list[MaterialData]) -> str:
-    """Transform the product data into a format understandable by GPT-4o."""
-    transformed_data = "Catálogo de productos Selva D' Oro:\n"
+def transform_material_data(material_data: List[MaterialData]) -> str:
+    """Transform material data into AI-readable format."""
+    transformed_data = "📦 CATÁLOGO DE MATERIALES RECICLABLES:\n\n"
+    
+    categories: Dict[str, List[MaterialData]] = {}
     for material in material_data:
-        transformed_data += (
-            f"ID: {material['item_id']}, "
-            f"Producto: {material['material']}, "
-            f"Precio por unidad: {material['price_kg']} PEN, "
-            f"Descripción: {material['price_ton']}.\n"
-        )
+        cat: str = material['category']
+        if cat not in categories:
+            categories[cat] = []
+        categories[cat].append(material)
+    
+    for category, materials in categories.items():
+        transformed_data += f"🔹 {category.upper()}:\n"
+        for mat in materials:
+            transformed_data += (
+                f"  • {mat['material']}\n"
+                f"    - Precio: S/ {mat['price_kg']:.2f}/kg | {mat['price_ton']}/tonelada\n"
+                f"    - Stock disponible: {mat['stock_available']}\n"
+                f"    - ID: #{mat['item_id']}\n\n"
+            )
+    
     return transformed_data
 
 
-material_data: list[MaterialData] = [
+material_data: List[MaterialData] = [
+    # PLÁSTICOS - Mayor volumen disponible
     {
         "item_id": 1,
-        "material": "MIEL DE ABEJA PURA 250g",
-        "price_kg": 18.00,
-        "price_ton": "Miel 100% pura de abejas de Chanchamayo, sin aditivos ni preservantes",
+        "material": "PET (Polietileno Tereftalato) - Botellas",
+        "price_kg": 1.80,
+        "price_ton": "1,650",
+        "category": "Plásticos",
+        "stock_available": ">66 toneladas en stock"
     },
     {
         "item_id": 2,
-        "material": "MIEL DE ABEJA PURA 500g",
-        "price_kg": 32.00,
-        "price_ton": "Miel 100% pura de abejas de Chanchamayo, sin aditivos ni preservantes",
+        "material": "HDPE (Polietileno Alta Densidad) - Envases",
+        "price_kg": 2.20,
+        "price_ton": "2,000",
+        "category": "Plásticos",
+        "stock_available": "45 toneladas disponibles"
     },
     {
         "item_id": 3,
-        "material": "MIEL DE ABEJA PURA 1kg",
-        "price_kg": 60.00,
-        "price_ton": "Miel 100% pura de abejas de Chanchamayo, sin aditivos ni preservantes",
+        "material": "LDPE (Polietileno Baja Densidad) - Bolsas",
+        "price_kg": 1.50,
+        "price_ton": "1,400",
+        "category": "Plásticos",
+        "stock_available": "38 toneladas disponibles"
     },
     {
         "item_id": 4,
-        "material": "CAFÉ ORGÁNICO EN GRANO 250g",
-        "price_kg": 22.00,
-        "price_ton": "Café orgánico de Chanchamayo en grano, tostado medio, notas de chocolate y frutos secos",
+        "material": "PP (Polipropileno) - Tapas y recipientes",
+        "price_kg": 1.90,
+        "price_ton": "1,750",
+        "category": "Plásticos",
+        "stock_available": "52 toneladas disponibles"
     },
+    
+    # METALES - Alto valor
     {
         "item_id": 5,
-        "material": "CAFÉ ORGÁNICO EN GRANO 500g",
-        "price_kg": 40.00,
-        "price_ton": "Café orgánico de Chanchamayo en grano, tostado medio, notas de chocolate y frutos secos",
+        "material": "Aluminio - Latas y perfiles",
+        "price_kg": 5.50,
+        "price_ton": "5,200",
+        "category": "Metales",
+        "stock_available": ">80 toneladas en stock"
     },
     {
         "item_id": 6,
-        "material": "CAFÉ ORGÁNICO EN GRANO 1kg",
-        "price_kg": 75.00,
-        "price_ton": "Café orgánico de Chanchamayo en grano, tostado medio, notas de chocolate y frutos secos",
+        "material": "Cobre - Cables y tuberías",
+        "price_kg": 22.00,
+        "price_ton": "20,500",
+        "category": "Metales",
+        "stock_available": "15 toneladas disponibles"
     },
     {
         "item_id": 7,
-        "material": "CAFÉ ORGÁNICO MOLIDO 250g",
-        "price_kg": 22.00,
-        "price_ton": "Café orgánico de Chanchamayo molido, ideal para cafetera italiana o francesa",
+        "material": "Acero - Chatarra y estructuras",
+        "price_kg": 1.20,
+        "price_ton": "1,100",
+        "category": "Metales",
+        "stock_available": "120 toneladas disponibles"
     },
     {
         "item_id": 8,
-        "material": "CAFÉ ORGÁNICO MOLIDO 500g",
-        "price_kg": 40.00,
-        "price_ton": "Café orgánico de Chanchamayo molido, ideal para cafetera italiana o francesa",
+        "material": "Bronce - Piezas industriales",
+        "price_kg": 18.00,
+        "price_ton": "17,000",
+        "category": "Metales",
+        "stock_available": "8 toneladas disponibles"
     },
+    
+    # PAPEL Y CARTÓN
     {
         "item_id": 9,
-        "material": "COMBO MIEL 500g + CAFÉ 250g",
-        "price_kg": 50.00,
-        "price_ton": "Combo especial: Miel pura 500g y Café orgánico 250g",
+        "material": "Papel Blanco - Oficina y archivo",
+        "price_kg": 0.80,
+        "price_ton": "750",
+        "category": "Papel",
+        "stock_available": ">96 toneladas en stock"
     },
     {
         "item_id": 10,
-        "material": "COMBO MIEL 1kg + CAFÉ 500g",
-        "price_kg": 95.00,
-        "price_ton": "Combo familiar: Miel pura 1kg y Café orgánico 500g",
+        "material": "Papel Periódico",
+        "price_kg": 0.45,
+        "price_ton": "420",
+        "category": "Papel",
+        "stock_available": "67 toneladas disponibles"
     },
+    {
+        "item_id": 11,
+        "material": "Cartón Corrugado - Cajas",
+        "price_kg": 0.60,
+        "price_ton": "550",
+        "category": "Cartón",
+        "stock_available": "85 toneladas disponibles"
+    },
+    {
+        "item_id": 12,
+        "material": "Cartón Compacto - Empaques",
+        "price_kg": 0.70,
+        "price_ton": "650",
+        "category": "Cartón",
+        "stock_available": "42 toneladas disponibles"
+    },
+    
+    # VIDRIO
+    {
+        "item_id": 13,
+        "material": "Vidrio Transparente - Botellas",
+        "price_kg": 0.35,
+        "price_ton": "320",
+        "category": "Vidrio",
+        "stock_available": "55 toneladas disponibles"
+    },
+    {
+        "item_id": 14,
+        "material": "Vidrio de Color - Ámbar/Verde",
+        "price_kg": 0.30,
+        "price_ton": "280",
+        "category": "Vidrio",
+        "stock_available": "38 toneladas disponibles"
+    },
+    
+    # ESPECIALES - Tetrapak y otros
+    {
+        "item_id": 15,
+        "material": "Tetrapak - Envases multicapa",
+        "price_kg": 0.85,
+        "price_ton": "800",
+        "category": "Especiales",
+        "stock_available": "25 toneladas disponibles"
+    },
+    {
+        "item_id": 16,
+        "material": "Baterías de Plomo - Reciclaje especializado",
+        "price_kg": 3.50,
+        "price_ton": "3,200",
+        "category": "Especiales",
+        "stock_available": "12 toneladas disponibles"
+    }
 ]
 
 formatted_product_data = transform_material_data(material_data)
